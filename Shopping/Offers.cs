@@ -6,85 +6,84 @@ namespace Shopping
 {
     public class Offers
     {
-        public decimal Discount(List<Code> items) // ABBCC
+        public double Discount(List<Code> items)
         {
-           decimal totalPrice = 0;
+           double totalPrice = 0;
             
-            decimal CountA, CountB, CountC, CountD, CountE ;
-            CountA = CountB = CountC = CountD = CountE = 0;
+            double countA, countB, countC, countD, countE ;
+            countA = countB = countC = countD = countE = 0;
             for (int i = 0; i < items.Count; i++)
             {
                 if (items[i] == Code.A)
                 {
-                    CountA++;
+                    countA++;
                 }
                 if (items[i] == Code.B)
                 {
-                    CountB++;
+                    countB++;
                 }
                 if (items[i] == Code.C)
                 {
-                    CountC++;
+                    countC++;
                 }
                 if (items[i] == Code.D)
                 {
-                    CountD++;
+                    countD++;
                 }
                 if (items[i] == Code.E)
                 {
-                    CountE++;
+                    countE++;
                 }
             }
-
-
-            if (CountA < 10)
+            if (countA > 0)
             {
-                totalPrice = 1.50 * CountA;
-
+                totalPrice = 1.50 * countA;
             }
             
-
-            if (CountB >= 3)
+            if(countB > 0)
             {
-                if (CountB % 3 == 0)
+                totalPrice += (int)(countB / 3) * 5 + (countB % 3) * 2;
+            }
+
+            if(countC > 0)
+            {
+                totalPrice += (int)(countC / 2) * 0.75 + (countC % 2) * 0.75;
+            }
+            
+            if(countD > 0)
+            {
+                if(countD % 3 == 0)
                 {
-                    totalPrice = (CountB / 3) * 5;
+                    totalPrice += (int)(countD / 3) * 7 + (countD % 3) * 3;
                 }
-                else if (CountB % 3 != 0)
+                else if(countD % 2 == 0)
                 {
-                    totalPrice = (CountB % 3) * 5 + Math.Round(CountB / 3) * 2;
+                    totalPrice += (int)(countD / 2) * 4.5 + (countD % 2) * 3;
+                }
+                else
+                {
+                    totalPrice += countD * 3;
+                }
+            }
+
+            if(countE > 0)
+            {
+                if(countE % 3 == 0)
+                {
+                    totalPrice += ((int)(countE / 3) * 4.8 + (countE % 3) * 4.8);
+                }
+                else
+                {
+                    totalPrice += ((int)(countE / 3) * 4.8 + (countE % 3) * 4.8) / 2;
                 }
                 
             }
-            else
+
+            if (items.Count >= 10)
             {
-                totalPrice = CountB * 5;
+                totalPrice -= totalPrice * 0.1;
             }
-
-
-            if(CountC % 2 == 0)
-            {
-
-            }
-
-
-
-
-
-
-            if (items.Count < 10)
-            {
-                totalPrice = (decimal)(1.50 * CountA);
-
-            }
-            else if (items.Count > 10)
-            {
-                decimal tenOff = (decimal)((1.50 * 10) * 0.1);
-                totalPrice = (decimal)(1.50 * 10) - tenOff;
-
-            }
-
-            return 0;
+            return totalPrice;
         }
     }
 }

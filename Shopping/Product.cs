@@ -10,7 +10,7 @@ namespace Shopping
        
     }
 
-     public enum Code
+    public enum Code
     {
         A, B, C, D, E
     }
